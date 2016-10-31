@@ -21,7 +21,7 @@ Command ran:
 `ruter eiksmarka vigelandsparken`
 
 Output: 
-![ruter-cli example usage](https://i.imgur.com/owIwPgf.png)
+![ruter-cli example usage](https://i.imgur.com/fbmAKBI.png)
 
 ##License
 MIT License
