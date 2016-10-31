@@ -1,0 +1,40 @@
+{
+  "name": "ruter-cli",
+  "version": "0.1.0",
+  "description": "A command line tool for public transportation in Oslo, Norway",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErlendEllingsen/ruter-cli.git"
+  },
+  "keywords": [
+    "ruter",
+    "cli",
+    "public",
+    "transportation",
+    "metro",
+    "subway",
+    "oslo",
+    "norway",
+    "tram",
+    "train",
+    "pt"
+  ],
+  "author": "Erlend Ellingsen <erlend.ame@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ErlendEllingsen/ruter-cli/issues"
+  },
+  "homepage": "https://github.com/ErlendEllingsen/ruter-cli#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "request": "^2.76.0"
+  },
+  "bin": {
+    "ruter": "./app.js"
+  }
+}
