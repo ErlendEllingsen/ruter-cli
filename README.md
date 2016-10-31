@@ -3,11 +3,11 @@
 
 Speed has never been more important in a world where time is of the essence. This is why **ruter-cli** came to life.
 
-*ruter-cli* is a open soruce command line tool that quickly allows you to plan trips, find next departure, and much more when using public transportation in Oslo, Norway (And all other areas that ruter cover).
-
-
+*ruter-cli* is a open source command line tool that quickly allows you to plan trips and find next departures when using public transportation in Oslo, Norway (And all other areas that Ruter cover).
 
 A command line tool for public transportation in Oslo, Norway. 
+
+This little toy is available as a result of [Ruter's labs](https://ruter.no/labs/) public "Reis"-API.   
 
 ##Installation
 `npm install ruter-cli -g` 
