@@ -122,7 +122,7 @@ searchProcess.trip_output = function(obj) {
 				var stamp_departure = '(' + colors.red(tools.timeStampToDisplay(stage.DepartureTime)) + ')';
 				var stamp_arrival = '(' + colors.red(tools.timeStampToDisplay(stage.ArrivalTime)) + ')';
 
-				console.log(stageStep  + " " + stage.DepartureStop.Name + ' ' + stamp_departure + ' ' + emoji + '  -> ' + stage.ArrivalStop.Name + " " + stamp_arrival);	
+				console.log(stageStep  + " " + stage.DepartureStop.Name + ' ' + stamp_departure + ' ' + stage.LineName + ' ' + emoji + '  -> ' + stage.ArrivalStop.Name + " " + stamp_arrival);	
 			}
 			
 			//end stage iteration
