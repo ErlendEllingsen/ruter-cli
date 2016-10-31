@@ -11,6 +11,7 @@ var fs = require('fs');
 var transportations = {
 	'0': '🚶',
 	'2': '🚌',
+	'5': '⛴',
 	'6': '🚆',
 	'7': '🚋',
 	'8': '🚇'
@@ -98,6 +99,8 @@ searchProcess.find_trip = function(){
 }
 
 searchProcess.trip_output = function(obj) {
+
+	fs.writeFileSync('trip.json', JSON.stringify(obj));
 
 	// OUTPUT
 	console.log('--------------------------------');
