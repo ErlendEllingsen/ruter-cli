@@ -59,9 +59,7 @@ searchProcess.find_from = function() {
 			searchObject.from_id = contents[0].ID;
 
 			//Both stations are provided. find trip.
-			searchProcess.find_to();	
-			
-
+			searchProcess.find_to();
 			//end error
 		}
 	});
@@ -70,37 +68,24 @@ searchProcess.find_from = function() {
 
 
 searchProcess.find_to = function() {
-
 	request('http://reisapi.ruter.no/Place/GetPlaces/?id=' + encodeURI(pointTo), function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			
 			var contents = JSON.parse(body);	
 			searchObject.to_id = contents[0].ID;
 			searchProcess.find_trip();
-			//end error
 		}
 	});
-
 }
 
 searchProcess.find_trip = function(){
-
-
-
 	request('http://reisapi.ruter.no/Travel/GetTravels?fromPlace=' + searchObject.from_id + '&toPlace=' + searchObject.to_id + '&isafter=true', function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			
 			searchProcess.trip_output(JSON.parse(body));
-
-			//end error
 		}
 	});
-
 }
 
 searchProcess.trip_output = function(obj) {
-
-	fs.writeFileSync('trip.json', JSON.stringify(obj));
 
 	// OUTPUT
 	console.log('--------------------------------');
@@ -144,15 +129,10 @@ searchProcess.trip_output = function(obj) {
 		}
 
 		console.log(''); //new line at bottom
-
 		//end travel proposal iteration
 	}
-
-
 	//end trip_output
 }
-
-
 
 //Start process
 searchProcess.find_from();
