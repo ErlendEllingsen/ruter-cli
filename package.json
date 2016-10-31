@@ -1,6 +1,6 @@
 {
   "name": "ruter-cli",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A command line tool for public transportation in Oslo, Norway",
   "main": "app.js",
   "scripts": {

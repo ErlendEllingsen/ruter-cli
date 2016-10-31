@@ -103,9 +103,6 @@ searchProcess.trip_output = function(obj) {
 	console.log('--------------------------------');
 	console.log(colors.green('REISEFORSLAG ' + pointFrom + " -> " + pointTo));
 
-	fs.writeFileSync('trip.fs', JSON.stringify(obj));
-
-
 	for (var i = 0; i < obj.TravelProposals.length; i++) {
 		var travelProposal = obj.TravelProposals[i];
 
