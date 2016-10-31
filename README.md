@@ -10,7 +10,7 @@ Speed has never been more important in a world where time is of the essence. Thi
 A command line tool for public transportation in Oslo, Norway. 
 
 ##Installation
-`npm install ruter -g` 
+`npm install ruter-cli -g` 
 
 ##Usage
 `ruter <from> <to>` 
