@@ -94,10 +94,11 @@ searchProcess.trip_output = function(obj) {
 	for (var i = 0; i < obj.TravelProposals.length; i++) {
 		var travelProposal = obj.TravelProposals[i];
 
-		console.log(colors.bold.yellow('------- ' + 'Forslag #' + (i+1) + ' -------'));
+		console.log(colors.bold.yellow('------- ' + 'Forslag #' + (i+1) + ' (Travel Time: ' + travelProposal.TotalTravelTime + ') -------'));
 
-		console.log('Departure: '.bold.white + " " + new moment(travelProposal.DepartureTime).toString());
-		console.log('Arrival: '.bold.white + " " + new moment(travelProposal.ArrivalTime).toString());
+		console.log('Departure:'.bold.white + "	" + new moment(travelProposal.DepartureTime).toString());
+		console.log('Arrival:'.bold.white + "	" + new moment(travelProposal.ArrivalTime).toString());
+		// console.log('Travel time:'.bold.white + "	" + travelProposal.TotalTravelTime);
 		console.log('');
 
 		//REMARKS
