@@ -98,7 +98,6 @@ searchProcess.trip_output = function(obj) {
 
 		console.log('Departure:'.bold.white + "	" + new moment(travelProposal.DepartureTime).toString());
 		console.log('Arrival:'.bold.white + "	" + new moment(travelProposal.ArrivalTime).toString());
-		// console.log('Travel time:'.bold.white + "	" + travelProposal.TotalTravelTime);
 		console.log('');
 
 		//REMARKS
