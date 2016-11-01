@@ -1,6 +1,6 @@
 {
   "name": "ruter-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A command line tool for public transportation in Oslo, Norway",
   "main": "app.js",
   "scripts": {
@@ -32,6 +32,7 @@
   "homepage": "https://github.com/ErlendEllingsen/ruter-cli#readme",
   "dependencies": {
     "colors": "^1.1.2",
+    "moment": "^2.15.2",
     "request": "^2.76.0"
   },
   "bin": {

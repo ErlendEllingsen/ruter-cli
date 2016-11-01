@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-var request = require('request');
-var colors = require('colors');
 var fs = require('fs');
-
+var request = require('request');
+var moment = require('moment');
+var colors = require('colors');
 
 /**
  * VARIABLES
@@ -34,9 +34,9 @@ var tools = {
 
 	timeStampToDisplay: function(timestamp){
 
-		var deptTime = new Date(timestamp);
-		var hrs = deptTime.getHours();
-		var mns = deptTime.getMinutes();
+		var deptTime = new moment(timestamp);
+		var hrs = deptTime.hours();
+		var mns = deptTime.minutes();
 		hrs = (hrs >= 10 ? '' : '0') + hrs;
 		mns = (mns >= 10 ? '' : '0') + mns;	
 		var stamp = '' + hrs + ':' + mns + "";
@@ -96,8 +96,8 @@ searchProcess.trip_output = function(obj) {
 
 		console.log(colors.bold.yellow('------- ' + 'Forslag #' + (i+1) + ' -------'));
 
-		console.log('Departure: '.bold.white + " " + new Date(travelProposal.DepartureTime).toString());
-		console.log('Arrival: '.bold.white + " " + new Date(travelProposal.ArrivalTime).toString());
+		console.log('Departure: '.bold.white + " " + new moment(travelProposal.DepartureTime).toString());
+		console.log('Arrival: '.bold.white + " " + new moment(travelProposal.ArrivalTime).toString());
 		console.log('');
 
 		//REMARKS
