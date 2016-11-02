@@ -2,12 +2,14 @@
 var fs = require('fs');
 var request = require('request');
 var moment = require('moment');
+var flags = require('flags');
 var colors = require('colors');
 
 /**
  * VARIABLES
  */
 
+// Ruter-specific variables
 var transportations = {
 	'0': '🚶',
 	'2': '🚌',
@@ -17,14 +19,30 @@ var transportations = {
 	'8': '🚇'
 };
 
+
+/**
+ * PROCESS START
+ */
+
+
 var pointFrom = (process.argv[2] == undefined ? false : process.argv[2]);
 var pointTo = (process.argv[3] == undefined ? false : process.argv[3]);
 
 if (pointFrom == false) throw "missing from";
 if (pointTo == false) throw "missing to";
 
+//Change args to match with flags..
+process.argv[2] = "--from='" + process.argv[2] + "'";
+process.argv[3] = "--to='" + process.argv[3] + "'";
+
+//Define flags 
+flags.defineInteger('proposals', 5, 'Number of travel proposals');
+flags.defineString('from', 'jernbanetorget', 'From-station');
+flags.defineString('to', 'stortinget ', 'To-station');
+flags.parse();
+
+
 //--- FETCH STOPS ---
-// var stops = fs.readFileSync('stops.json');
 var searchObject = {
 	from_id: null,
 	to_id: null
@@ -78,7 +96,7 @@ searchProcess.find_to = function() {
 }
 
 searchProcess.find_trip = function(){
-	request('http://reisapi.ruter.no/Travel/GetTravels?fromPlace=' + searchObject.from_id + '&toPlace=' + searchObject.to_id + '&isafter=true', function (error, response, body) {
+	request('http://reisapi.ruter.no/Travel/GetTravels?fromPlace=' + searchObject.from_id + '&toPlace=' + searchObject.to_id + '&isafter=true&proposals=' + flags.get('proposals'), function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 			searchProcess.trip_output(JSON.parse(body));
 		}
