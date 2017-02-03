@@ -23,7 +23,7 @@ This little toy is available as a result of [Ruter's labs](https://ruter.no/labs
 ###Example
 Command ran:
 
-`ruter eiksmarka vigelandsparken`
+`ruter eiksmarka bjørkelangen`
 
 Output: 
 ![ruter-cli example usage](https://i.imgur.com/fbmAKBI.png)
