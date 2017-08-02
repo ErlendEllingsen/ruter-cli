@@ -19,11 +19,12 @@ var transportations = {
 	'8': '🚇'
 };
 
-
 /**
  * PROCESS START
  */
 
+var currentdate = new Date().toLocaleString();
+currentdate = getApiTime(currentdate);
 
 var pointFrom = (process.argv[2] == undefined ? false : process.argv[2]);
 var pointTo = (process.argv[3] == undefined ? false : process.argv[3]);
@@ -39,8 +40,20 @@ process.argv[3] = "--to='" + process.argv[3] + "'";
 flags.defineInteger('proposals', 5, 'Number of travel proposals');
 flags.defineString('from', 'jernbanetorget', 'From-station');
 flags.defineString('to', 'stortinget ', 'To-station');
+flags.defineString('time', currentdate, 'Time of arrival at destination');
+flags.defineBoolean('after', false, 'If proposals should show arrival before defined time'); 
 flags.parse();
 
+// Fix time arg if defined
+if(flags.get('time').length === 4){
+    // Convert the argument into the ruter apis time format
+    currentdate = currentdate.substring(0, 8) + flags.get('time');
+}
+// If the user also has defined a date
+if(flags.get('time').length === 8){
+    // Convert the argument into the ruter apis time format
+    currentdate = flags.get('time').substring(0, 4) + currentdate.substring(4, 8) + flags.get('time').substring(4, 8);
+}
 
 //--- FETCH STOPS ---
 var searchObject = {
@@ -61,7 +74,21 @@ var tools = {
 		return stamp;		
 
 	}
+}
 
+function removeCharFromString(string, character){
+    while(string.includes(character)){
+        string = string.replace(character, '');
+    }
+    return string;
+}
+
+function getApiTime(string){
+    string = removeCharFromString(string, '/');
+    string = removeCharFromString(string, ' ');
+    string = removeCharFromString(string, ':');
+    string = removeCharFromString(string, ',');
+    return string;
 }
 
 var searchProcess = {
@@ -84,7 +111,6 @@ searchProcess.find_from = function() {
 
 }
 
-
 searchProcess.find_to = function() {
 	request('http://reisapi.ruter.no/Place/GetPlaces/?id=' + encodeURI(pointTo), function (error, response, body) {
 		if (!error && response.statusCode == 200) {
@@ -96,9 +122,9 @@ searchProcess.find_to = function() {
 }
 
 searchProcess.find_trip = function(){
-	request('http://reisapi.ruter.no/Travel/GetTravels?fromPlace=' + searchObject.from_id + '&toPlace=' + searchObject.to_id + '&isafter=true&proposals=' + flags.get('proposals'), function (error, response, body) {
+	request('http://reisapi.ruter.no/Travel/GetTravels?fromPlace=' + searchObject.from_id + '&toPlace=' + searchObject.to_id + '&isafter=' + flags.get('after') + '&time=' + currentdate + '&proposals=' + flags.get('proposals'), function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			searchProcess.trip_output(JSON.parse(body));
+            searchProcess.trip_output(JSON.parse(body));
 		}
 	});
 }
