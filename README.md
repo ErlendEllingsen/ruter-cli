@@ -11,11 +11,6 @@ This little toy is available as a result of [Entur](https://developer.entur.org/
 ## Usage
 `ruter <from> <to>` 
 
-## Optional flags 
-```
---proposals=5 //Number of travel proposals, default 5, max 40
-```
-
 ### Example
 Command ran:
 
