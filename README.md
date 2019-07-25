@@ -3,7 +3,7 @@
 
 A command line tool for public transportation in Oslo, Norway. 
 
-This little toy is available as a result of [Ruter's labs](https://ruter.no/labs/) public "Reis"-API.   
+This little toy is available as a result of [Entur](https://developer.entur.org/)
 
 ## Installation
 `npm install ruter-cli -g` 
