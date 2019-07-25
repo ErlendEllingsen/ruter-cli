@@ -25,6 +25,13 @@
     "pt"
   ],
   "author": "Erlend Ellingsen <erlend.ame@gmail.com>",
+  "contributors": [
+    {
+      "name": "Will DiBiagio",
+      "email": "wdibiagio@gmail.com",
+      "url": "https://willdibiagio.com"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ErlendEllingsen/ruter-cli/issues"
