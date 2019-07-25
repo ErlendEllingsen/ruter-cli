@@ -23,3 +23,4 @@ Output:
 MIT License
 
 Copyright (c) 2016 Erlend Ellingsen
+Copyright (c) 2019 Will DiBiagio
