@@ -3,18 +3,13 @@
 
 A command line tool for public transportation in Oslo, Norway. 
 
-This little toy is available as a result of [Ruter's labs](https://ruter.no/labs/) public "Reis"-API.   
+This little toy is available as a result of [Entur](https://developer.entur.org/)
 
 ## Installation
 `npm install ruter-cli -g` 
 
 ## Usage
 `ruter <from> <to>` 
-
-## Optional flags 
-```
---proposals=5 //Number of travel proposals, default 5, max 40
-```
 
 ### Example
 Command ran:
@@ -28,3 +23,4 @@ Output:
 MIT License
 
 Copyright (c) 2016 Erlend Ellingsen
+Copyright (c) 2019 Will DiBiagio
