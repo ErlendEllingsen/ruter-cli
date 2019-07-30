@@ -61,53 +61,36 @@ var tools = {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.ceil((seconds % 3600) / 60);
     return hours > 0 ? `${hours} h ${minutes} min` : `${minutes} min`;
+  },
+  get_NSR_stop_place: function(contents) {
+    for (var i = 0; i < contents.features.length; i++) {
+      if (contents.features[i].properties.id.startsWith("NSR")) {
+        return contents.features[i].properties.id;
+      }
+    }
+    return null;
   }
 };
-
-function removeCharFromString(string, character) {
-  while (string.includes(character)) {
-    string = string.replace(character, "");
-  }
-  return string;
-}
-
-function getApiTime(string) {
-  string = removeCharFromString(string, "/");
-  string = removeCharFromString(string, " ");
-  string = removeCharFromString(string, ":");
-  string = removeCharFromString(string, ",");
-  string = removeCharFromString(string, "'");
-  return string;
-}
 
 var searchProcess = {};
 
 searchProcess.find_from = function() {
-  //https://api.entur.io/geocoder/v1/autocomplete?text=eiksmarka&lang=en
-
   request(
     "https://api.entur.io/geocoder/v1/autocomplete?text=" +
       encodeURI(pointFrom),
     function(error, response, body) {
       if (!error && response.statusCode == 200) {
         var contents = JSON.parse(body);
-        searchObject.from_id = get_NSR_stop_place(contents);
-        //Both stations are provided. find trip.
-        searchProcess.find_to();
-        //end error
+        searchObject.from_id = tools.get_NSR_stop_place(contents);
+        if (searchObject.from_id !== null) {
+          searchProcess.find_to();
+        } else {
+          throw "can't find from id";
+        }
       }
     }
   );
 };
-
-function get_NSR_stop_place(contents) {
-  for (var i = 0; i < contents.features.length; i++) {
-    if (contents.features[i].properties.id.startsWith("NSR")) {
-      return contents.features[i].properties.id;
-    }
-  }
-  return null;
-}
 
 searchProcess.find_to = function() {
   request(
@@ -115,18 +98,18 @@ searchProcess.find_to = function() {
     function(error, response, body) {
       if (!error && response.statusCode == 200) {
         var contents = JSON.parse(body);
-        searchObject.to_id = get_NSR_stop_place(contents);
-        if (searchObject.from_id === null || searchObject.to_id === null) {
-          throw "can't find places";
+        searchObject.to_id = tools.get_NSR_stop_place(contents);
+        if (searchObject.to_id !== null) {
+          searchProcess.query();
         } else {
-          searchProcess.test();
+          throw "can't find to id";
         }
       }
     }
   );
 };
 
-searchProcess.test = function() {
+searchProcess.query = function() {
   const endpoint = "https://api.entur.io/journey-planner/v2/graphql";
   const variables = {
     toId: searchObject.to_id,
