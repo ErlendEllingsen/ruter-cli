@@ -1,17 +1,17 @@
 #!/usr/bin/env node
-var fs = require("fs");
-var request = require("request");
-var moment = require("moment");
-var flags = require("flags");
-var colors = require("colors");
-var graphqlRequest = require("graphql-request");
+const fs = require("fs");
+const request = require("request");
+const moment = require("moment");
+const flags = require("flags");
+const colors = require("colors");
+const graphqlRequest = require("graphql-request");
 
 /**
  * VARIABLES
  */
 
 // Ruter-specific variables
-var transportationEmojis = {
+const transportationEmojis = {
   foot: "🚶",
   bus: "🚌",
   coach: "🚌",
@@ -25,8 +25,8 @@ var transportationEmojis = {
  * PROCESS START
  */
 
-var pointFrom = process.argv[2] == undefined ? false : process.argv[2];
-var pointTo = process.argv[3] == undefined ? false : process.argv[3];
+const pointFrom = process.argv[2] == undefined ? false : process.argv[2];
+const pointTo = process.argv[3] == undefined ? false : process.argv[3];
 
 if (pointFrom == false) throw "missing from";
 if (pointTo == false) throw "missing to";
@@ -42,20 +42,19 @@ flags.defineString("to", "stortinget ", "To-station");
 flags.parse();
 
 //--- FETCH STOPS ---
-var searchObject = {
+const searchObject = {
   from_id: null,
   to_id: null
 };
 
-var tools = {
+const tools = {
   timeStampToDisplay: function(timestamp) {
-    var deptTime = new moment(timestamp);
-    var hrs = deptTime.hours();
-    var mns = deptTime.minutes();
+    const deptTime = new moment(timestamp);
+    let hrs = deptTime.hours();
+    let mns = deptTime.minutes();
     hrs = (hrs >= 10 ? "" : "0") + hrs;
     mns = (mns >= 10 ? "" : "0") + mns;
-    var stamp = "" + hrs + ":" + mns + "";
-    return stamp;
+    return "" + hrs + ":" + mns + "";
   },
   formatSeconds: function(seconds) {
     const hours = Math.floor(seconds / 3600);
@@ -63,7 +62,7 @@ var tools = {
     return hours > 0 ? `${hours} h ${minutes} min` : `${minutes} min`;
   },
   get_NSR_stop_place: function(contents) {
-    for (var i = 0; i < contents.features.length; i++) {
+    for (let i = 0; i < contents.features.length; i++) {
       if (contents.features[i].properties.id.startsWith("NSR")) {
         return contents.features[i].properties.id;
       }
@@ -72,7 +71,7 @@ var tools = {
   }
 };
 
-var searchProcess = {};
+const searchProcess = {};
 
 searchProcess.find_from = function() {
   request(
@@ -80,7 +79,7 @@ searchProcess.find_from = function() {
       encodeURI(pointFrom),
     function(error, response, body) {
       if (!error && response.statusCode == 200) {
-        var contents = JSON.parse(body);
+        const contents = JSON.parse(body);
         searchObject.from_id = tools.get_NSR_stop_place(contents);
         if (searchObject.from_id !== null) {
           searchProcess.find_to();
@@ -97,7 +96,7 @@ searchProcess.find_to = function() {
     "https://api.entur.io/geocoder/v1/autocomplete?text=" + encodeURI(pointTo),
     function(error, response, body) {
       if (!error && response.statusCode == 200) {
-        var contents = JSON.parse(body);
+        const contents = JSON.parse(body);
         searchObject.to_id = tools.get_NSR_stop_place(contents);
         if (searchObject.to_id !== null) {
           searchProcess.query();
@@ -156,8 +155,8 @@ searchProcess.trip_output = function(obj) {
   // OUTPUT
   console.log("--------------------------------");
   console.log(colors.green("Travel Routes " + pointFrom + " -> " + pointTo));
-  for (var i = 0; i < obj.trip.tripPatterns.length; i++) {
-    var route = obj.trip.tripPatterns[i];
+  for (let i = 0; i < obj.trip.tripPatterns.length; i++) {
+    const route = obj.trip.tripPatterns[i];
     console.log(
       colors.bold.yellow(
         "------- " +
@@ -175,11 +174,11 @@ searchProcess.trip_output = function(obj) {
       "Arrival:".bold.white + "	" + new moment(route.endTime).toString()
     );
     console.log("");
-    for (var y = 0; y < route.legs.length; y++) {
-      var leg = route.legs[y];
-      var legStep =
+    for (let y = 0; y < route.legs.length; y++) {
+      const leg = route.legs[y];
+      const legStep =
         colors.magenta("[") + colors.grey(y + 1) + colors.magenta("] ");
-      var emoji = transportationEmojis[leg.mode];
+      const emoji = transportationEmojis[leg.mode];
       if (leg.mode == "foot") {
         //Walking
         console.log(
@@ -190,19 +189,19 @@ searchProcess.trip_output = function(obj) {
         );
       } else {
         //USING TRANSPORT (NOT WALKING)
-        var stamp_departure =
+        const stamp_departure =
           "(" + colors.red(tools.timeStampToDisplay(leg.aimedStartTime)) + ")";
-        var stamp_arrival =
+        const stamp_arrival =
           "(" + colors.red(tools.timeStampToDisplay(leg.aimedEndTime)) + ")";
-        var stamp_expected_departure =
+        const stamp_expected_departure =
           "(" +
           colors.red(tools.timeStampToDisplay(leg.expectedStartTime)) +
           ")";
-        var stamp_expected_arrival =
+        const stamp_expected_arrival =
           "(" +
           colors.red(tools.timeStampToDisplay(leg.stamp_expectedEndTime)) +
           ")";
-        var travel_notice =
+        const travel_notice =
           leg.notices !== undefined && leg.notices.length > 0
             ? "⚠️  Remarks! Check app or ruter.no ⚠️ "
             : "";
