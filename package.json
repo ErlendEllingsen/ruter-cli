@@ -39,6 +39,7 @@
   "homepage": "https://github.com/ErlendEllingsen/ruter-cli#readme",
   "dependencies": {
     "colors": "^1.1.2",
+    "configstore": "^5.0.0",
     "flags": "^0.1.3",
     "graphql-request": "^1.8.2",
     "moment": "^2.15.2",
